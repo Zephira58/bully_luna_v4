@@ -41,6 +41,22 @@ impl eframe::App for MyApp {
                 ui.text_edit_singleline(&mut self.insult);
             });
             
+            ui.horizontal(|ui| {
+                if ui.button("Generate insult").clicked() {
+                    //TODO: Use the insult generator api (https://insult.mattbas.org/api/insult)
+                }
+            });
+
+            ui.separator();
+
+            ui.horizontal(|ui| {
+                ui.label("Your insult: ");
+                ui.label(&self.insult);
+            });
+
+            if ui.button("Send Insult").clicked() {
+                //TODO: Use the discord API to send an insult to luna (747638440404713582)
+            }
         });
     }
 }
