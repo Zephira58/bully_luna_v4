@@ -14,6 +14,7 @@ fn main() {
 struct MyApp {
     //Enter global values to be used with your app here
     insult: String,
+    insult_response: String,
 }
 
 impl Default for MyApp { //defaults for your global values
@@ -21,8 +22,25 @@ impl Default for MyApp { //defaults for your global values
         Self {
             //enter global default values here
             insult: "".to_string(),
+            insult_response: "".to_string(),
         }
     }
+}
+
+//A function that makes a get request from https://insult.mattbas.org/api/insult and returns it as a string
+async fn get_insult() -> String {
+    //TODO: Somehow get the response from the api and return it as a string
+    let client = reqwest::Client::new();
+    let resp = client
+        .get("https://insult.mattbas.org/api/insult")
+        .send()
+        .await
+        .unwrap()
+        .text()
+        .await
+        .unwrap();
+        println!("{:#?}", resp);
+     return resp.to_string();
 }
 
 impl eframe::App for MyApp {
@@ -44,6 +62,7 @@ impl eframe::App for MyApp {
             ui.horizontal(|ui| {
                 if ui.button("Generate insult").clicked() {
                     //TODO: Use the insult generator api (https://insult.mattbas.org/api/insult)
+                    
                 }
             });
 
