@@ -5,7 +5,7 @@ use eframe::egui::Visuals; //Imports dark mode
 fn main() {
     let options = eframe::NativeOptions::default();
     eframe::run_native(
-        "egui", //app name
+        "Bully Luna V.4", //app name
         options, //just leave this at options
         Box::new(|_cc| Box::new(MyApp::default())), //leave this as default
     );
@@ -14,7 +14,6 @@ fn main() {
 struct MyApp {
     //Enter global values to be used with your app here
     insult: String,
-    insult_response: String,
 }
 
 impl Default for MyApp { //defaults for your global values
@@ -22,7 +21,6 @@ impl Default for MyApp { //defaults for your global values
         Self {
             //enter global default values here
             insult: "".to_string(),
-            insult_response: "".to_string(),
         }
     }
 }
