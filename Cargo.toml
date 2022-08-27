@@ -2,7 +2,13 @@
 name = "bully_luna_v4"
 version = "0.1.0"
 edition = "2021"
-
+authors = ["Xanthus58 <xanthus58@protonmail.com>"]
+license = "MIT"
+repository = "https://github.com/Xanthus58/bully_luna_v4"
+readme = "README.md"
+description = "A small commissioned CLI based application made for managing Crypto Pool Payments"
+publish = false
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+eframe = "0.19.0"

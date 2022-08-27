@@ -1,0 +1,1 @@
+Hey so long story short me and a friend of mine have a long running thing where we make "insult" programs and this is my attempt at a version 4
