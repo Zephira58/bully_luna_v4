@@ -26,19 +26,10 @@ impl Default for MyApp { //defaults for your global values
 }
 
 //A function that makes a get request from https://insult.mattbas.org/api/insult and returns it as a string
-async fn get_insult() -> String {
-    //TODO: Somehow get the response from the api and return it as a string
-    let client = reqwest::Client::new();
-    let resp = client
-        .get("https://insult.mattbas.org/api/insult")
-        .send()
-        .await
-        .unwrap()
-        .text()
-        .await
-        .unwrap();
-        println!("{:#?}", resp);
-     return resp.to_string();
+fn get_insult() -> String {
+    let x = reqwest::blocking::get("https://insult.mattbas.org/api/insult").expect("Get failed").text().expect("Couldn't get response body");
+    println!("{}", x); 
+    return x;
 }
 
 impl eframe::App for MyApp {
@@ -60,7 +51,7 @@ impl eframe::App for MyApp {
             ui.horizontal(|ui| {
                 if ui.button("Generate insult").clicked() {
                     //TODO: Use the insult generator api (https://insult.mattbas.org/api/insult)
-                    
+                    self.insult = get_insult();
                 }
             });
 
