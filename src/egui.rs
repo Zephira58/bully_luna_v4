@@ -9,7 +9,8 @@ pub struct MyApp {
     insult: String,
 }
 
-impl Default for MyApp { //defaults for your global values
+impl Default for MyApp {
+    //defaults for your global values
     fn default() -> Self {
         Self {
             //enter global default values here
@@ -19,8 +20,6 @@ impl Default for MyApp { //defaults for your global values
 }
 
 //A function that makes a get request from https://insult.mattbas.org/api/insult and returns it as a string
-
-
 
 impl eframe::App for MyApp {
     fn update(&mut self, ctx: &egui::Context, _frame: &mut eframe::Frame) {
@@ -37,9 +36,10 @@ impl eframe::App for MyApp {
                 ui.label("Enter an insult: ");
                 ui.text_edit_multiline(&mut self.insult);
             });
-            
+
+            let generate_button = ui.button("Generate an insult");
             ui.horizontal(|ui| {
-                if ui.button("Generate insult").clicked() {
+                if generate_button.clicked() {
                     self.insult = get_insult();
                 }
             });
@@ -47,13 +47,13 @@ impl eframe::App for MyApp {
             ui.separator();
 
             ui.horizontal(|ui| {
-                ui.label("Your insult: ");
+                ui.label("Your insult:");
                 ui.label(&self.insult);
             });
 
-            if ui.button("Send Insult").clicked() {
+            if ui.button("Send Insult").hovered() {
                 //TODO: Use the discord API to send an insult to luna (747638440404713582)
-
+                ui.label("This is still a work in progress!");
             }
         });
     }
