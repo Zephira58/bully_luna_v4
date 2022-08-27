@@ -38,11 +38,9 @@ impl eframe::App for MyApp {
             });
 
             let generate_button = ui.button("Generate an insult");
-            ui.horizontal(|ui| {
-                if generate_button.clicked() {
-                    self.insult = get_insult();
-                }
-            });
+            if generate_button.clicked() {
+                self.insult = get_insult();
+            }
 
             ui.separator();
 
