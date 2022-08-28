@@ -50,7 +50,7 @@ impl eframe::App for MyApp {
             });
 
             if ui.button("Send Insult").hovered() {
-                //TODO: Use the discord API to send an insult to luna (747638440404713582)
+                //TODO: Use the discord API to send an insult to luna
                 ui.label("This is still a work in progress!");
             }
         });
