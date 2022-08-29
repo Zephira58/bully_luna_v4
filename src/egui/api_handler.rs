@@ -10,6 +10,6 @@ pub fn get_insult() -> String {
 
 pub fn send_message(insult: String) {
     //TODO: Use the discord API to send an insult to luna
-    
+
     println!("{}", insult);
 }

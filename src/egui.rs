@@ -54,7 +54,7 @@ impl eframe::App for MyApp {
                 ui.label("This is still a work in progress!");
             }
             if send_button.clicked() {
-                send_message(self.insult.clone()); 
+                send_message(self.insult.clone());
             }
         });
     }
