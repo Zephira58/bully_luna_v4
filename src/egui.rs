@@ -49,9 +49,12 @@ impl eframe::App for MyApp {
                 ui.label(&self.insult);
             });
 
-            if ui.button("Send Insult").hovered() {
-                //TODO: Use the discord API to send an insult to luna
+            let send_button = ui.button("Send insult to luna");
+            if send_button.hovered() {
                 ui.label("This is still a work in progress!");
+            }
+            if send_button.clicked() {
+                send_message(self.insult.clone()); 
             }
         });
     }
