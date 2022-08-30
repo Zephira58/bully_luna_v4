@@ -1,5 +1,5 @@
-use eframe::egui::{self}; //Imports the rendering engine
-use eframe::egui::Visuals; //Imports dark mode
+use eframe::egui::Visuals;
+use eframe::egui::{self}; //Imports the rendering engine //Imports dark mode
 
 mod api_handler; //Imports the API handler
 use api_handler::*;
@@ -31,7 +31,9 @@ impl eframe::App for MyApp {
             self.insult = self.insult.replace("\n", ""); // Removes newlines from the string
 
             ui.label("Hello and welcome to version 4 of the bully luna program!");
-            ui.label("You can randomly generate an insult or write your own below to be sent to luna!");
+            ui.label(
+                "You can randomly generate an insult or write your own below to be sent to luna!",
+            );
 
             ui.separator();
             ui.horizontal(|ui| {
@@ -66,8 +68,10 @@ impl eframe::App for MyApp {
                 ui.set_min_width(350.0); // if you want to control the size
                 ui.label(format!("{}", self.insult));
                 ui.separator();
-                ui.label("Has been successfully sent to luna!\nThank you for choosing bully luna v.4!");
-            }); 
+                ui.label(
+                    "Has been successfully sent to luna!\nThank you for choosing bully luna v.4!",
+                );
+            });
         });
     }
 }
