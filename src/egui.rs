@@ -1,3 +1,5 @@
+#![allow(clippy::all)]
+
 use eframe::egui::Visuals;
 use eframe::egui::{self}; //Imports the rendering engine //Imports dark mode
 
@@ -19,8 +21,6 @@ impl Default for MyApp {
     }
 }
 
-//A function that makes a get request from https://insult.mattbas.org/api/insult and returns it as a string
-
 impl eframe::App for MyApp {
     fn update(&mut self, ctx: &egui::Context, _frame: &mut eframe::Frame) {
         egui::CentralPanel::default().show(ctx, |ui| {
@@ -28,7 +28,7 @@ impl eframe::App for MyApp {
             ctx.set_visuals(egui::Visuals::dark()); // Make the ui dark
             egui::warn_if_debug_build(ui);
 
-            self.insult = self.insult.replace("\n", ""); // Removes newlines from the string
+            self.insult = self.insult.replace("\n", "");
 
             ui.label("Hello and welcome to version 4 of the bully luna program!");
             ui.label(
@@ -54,9 +54,6 @@ impl eframe::App for MyApp {
             });
 
             let send_button = ui.button("Send insult to luna");
-            //if send_button.hovered() {
-            //    ui.label("This is still a work in progress!");
-            //}
 
             let popup_id = ui.make_persistent_id("send_button_popup");
             if send_button.clicked() {
