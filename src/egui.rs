@@ -1,4 +1,4 @@
-use eframe::egui; //Imports the rendering engine
+use eframe::egui::{self}; //Imports the rendering engine
 use eframe::egui::Visuals; //Imports dark mode
 
 mod api_handler; //Imports the API handler
@@ -28,8 +28,10 @@ impl eframe::App for MyApp {
             ctx.set_visuals(egui::Visuals::dark()); // Make the ui dark
             egui::warn_if_debug_build(ui);
 
+            self.insult = self.insult.replace("\n", ""); // Removes newlines from the string
+
             ui.label("Hello and welcome to version 4 of the bully luna program!");
-            ui.label("You can randomly generate an insult or write your own below to be sent to luna via discord!");
+            ui.label("You can randomly generate an insult or write your own below to be sent to luna!");
 
             ui.separator();
             ui.horizontal(|ui| {
@@ -50,12 +52,22 @@ impl eframe::App for MyApp {
             });
 
             let send_button = ui.button("Send insult to luna");
-            if send_button.hovered() {
-                ui.label("This is still a work in progress!");
-            }
+            //if send_button.hovered() {
+            //    ui.label("This is still a work in progress!");
+            //}
+
+            let popup_id = ui.make_persistent_id("send_button_popup");
             if send_button.clicked() {
-                send_message(self.insult.clone());
+                ui.memory().toggle_popup(popup_id);
             }
+
+            egui::popup::popup_below_widget(ui, popup_id, &send_button, |ui| {
+                //The contents of the popup go here
+                ui.set_min_width(350.0); // if you want to control the size
+                ui.label(format!("{}", self.insult));
+                ui.separator();
+                ui.label("Has been successfully sent to luna!\nThank you for choosing bully luna v.4!");
+            }); 
         });
     }
 }
