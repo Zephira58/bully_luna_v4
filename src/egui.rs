@@ -37,7 +37,14 @@ impl eframe::App for MyApp {
                 ui.style_mut().visuals = Visuals::dark(); // Makes the buttons dark
                 ctx.set_visuals(egui::Visuals::dark()); // Make the ui dark
                 egui::warn_if_debug_build(ui);
-                ui.label("                                                                        Current build: 1.2.1");
+
+                ui.horizontal(|ui| {
+                    ui.label("Current build:");
+                    ui.hyperlink_to("1.2.1", "https://github.com/Xanthus58/bully_luna_v4/releases");
+                    
+                });
+
+                ui.add_space(8.0);
 
                 let cb = |t: &mut Toast| {
                     //Callback for the toast
@@ -59,7 +66,7 @@ impl eframe::App for MyApp {
                 });
 
                 ui.horizontal(|ui| {
-                    ui.label("Your insult:");
+                    ui.label("Your message:");
                     ui.label(&self.insult);
                 });
 
@@ -72,7 +79,7 @@ impl eframe::App for MyApp {
                         cb(self.toasts.success("Generation Successful!")); //Sends a success toast
                     }
 
-                    let send_button = ui.button("Send insult to luna");
+                    let send_button = ui.button("Send message to luna");
                     if send_button.clicked() {
                         send_message(&self.insult, self.mention);
 
