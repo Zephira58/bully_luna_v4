@@ -32,50 +32,49 @@ impl eframe::App for MyApp {
     fn update(&mut self, ctx: &egui::Context, _frame: &mut eframe::Frame) {
         egui::CentralPanel::default().show(ctx, |_ui| {
             Window::new("Bully Luna V.4!").show(ctx, |ui| {
+                ui.style_mut().visuals = Visuals::dark(); // Makes the buttons dark
+                ctx.set_visuals(egui::Visuals::dark()); // Make the ui dark
+                egui::warn_if_debug_build(ui);
 
-            ui.style_mut().visuals = Visuals::dark(); // Makes the buttons dark
-            ctx.set_visuals(egui::Visuals::dark()); // Make the ui dark
-            egui::warn_if_debug_build(ui);
+                let cb = |t: &mut Toast| {
+                    //Callback for the toast
+                    t.set_closable(self.closable)
+                        .set_duration(Some(Duration::from_millis((1000. * self.duration) as u64)));
+                };
 
-            let cb = |t: &mut Toast| { //Callback for the toast
-                t.set_closable(self.closable)
-                    .set_duration(Some(Duration::from_millis((1000. * self.duration) as u64)));
-            };
+                self.insult = self.insult.replace("\n", "");
 
-            self.insult = self.insult.replace("\n", "");
-
-            ui.label("Hello and welcome to version 4 of the bully luna program!");
-            ui.label(
+                ui.label("Hello and welcome to version 4 of the bully luna program!");
+                ui.label(
                 "You can randomly generate an insult or write your own below to be sent to luna!",
             );
 
-            ui.separator();
-            ui.horizontal(|ui| {
-                ui.label("Enter an insult: ");
-                ui.text_edit_multiline(&mut self.insult);
-            });
+                ui.separator();
+                ui.horizontal(|ui| {
+                    ui.label("Enter an insult: ");
+                    ui.text_edit_multiline(&mut self.insult);
+                });
 
-            let generate_button = ui.button("Generate an insult");
-            if generate_button.clicked() {
-                self.insult = get_insult();
-                cb(self.toasts.success("Generation Successful!")); //Sends a success toast
-            }
+                let generate_button = ui.button("Generate an insult");
+                if generate_button.clicked() {
+                    self.insult = get_insult();
+                    cb(self.toasts.success("Generation Successful!")); //Sends a success toast
+                }
 
-            ui.separator();
+                ui.separator();
 
-            ui.horizontal(|ui| {
-                ui.label("Your insult:");
-                ui.label(&self.insult);
-            });
-            
-            let send_button = ui.button("Send insult to luna");
-            if send_button.clicked() {
-                send_message(&self.insult);
+                ui.horizontal(|ui| {
+                    ui.label("Your insult:");
+                    ui.label(&self.insult);
+                });
 
-                cb(self.toasts.success("Message Sent!"));
+                let send_button = ui.button("Send insult to luna");
+                if send_button.clicked() {
+                    send_message(&self.insult);
 
-            }
-            self.toasts.show(ctx); // Requests to render toasts
+                    cb(self.toasts.success("Message Sent!"));
+                }
+                self.toasts.show(ctx); // Requests to render toasts
             });
         });
     }
