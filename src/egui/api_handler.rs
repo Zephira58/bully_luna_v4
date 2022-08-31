@@ -17,10 +17,14 @@ pub async fn send_message(msg: &str) -> WebhookResult<()> {
     let webhook_info = client.get_information().await?;
     println!("webhook: {:?}", webhook_info);
 
-    client.send(|message| message
-        .content(msg)
-        .username("Xanthus")
-        .avatar_url(IMAGE_URL)).await?;
+    client
+        .send(|message| {
+            message
+                .content(msg)
+                .username("Xanthus")
+                .avatar_url(IMAGE_URL)
+        })
+        .await?;
 
     Ok(())
 }
