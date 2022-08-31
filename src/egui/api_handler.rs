@@ -18,7 +18,6 @@ pub async fn send_message(msg: &str) {
     let IMAGE_URL = dotenv::var("IMAGE_URL").expect("IMAGE_URL not found");
     let DISCORD_ID = dotenv::var("DISCORD_ID").expect("DISCORD_ID not found");
 
-
     let message = msg.to_owned() + &DISCORD_ID;
     let message = message.as_str();
     let mut request_body = HashMap::new();
