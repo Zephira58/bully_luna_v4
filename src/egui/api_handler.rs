@@ -13,13 +13,17 @@ pub fn get_insult() -> String {
 }
 
 #[tokio::main]
-pub async fn send_message(msg: &str) {
-    let _WEBHOOK_URL = dotenv::var("WEBHOOK_URL").expect("WEBHOOK_URL not found");
+pub async fn send_message(msg: &str, mention: bool) {
+    let WEBHOOK_URL = dotenv::var("WEBHOOK_URL").expect("WEBHOOK_URL not found");
     let IMAGE_URL = dotenv::var("IMAGE_URL").expect("IMAGE_URL not found");
     let DISCORD_ID = dotenv::var("DISCORD_ID").expect("DISCORD_ID not found");
-
-    let message = msg.to_owned() + &DISCORD_ID;
+    
+    let mut message = msg.to_owned();
+    if mention == true {
+        message = message + &DISCORD_ID;
+    }
     let message = message.as_str();
+
     let mut request_body = HashMap::new();
     request_body.insert("content", message);
     request_body.insert("username", "Xanthus");

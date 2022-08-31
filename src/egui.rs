@@ -13,6 +13,7 @@ pub struct MyApp {
     toasts: Toasts,
     closable: bool,
     duration: f32,
+    mention: bool,
 }
 
 impl Default for MyApp {
@@ -24,6 +25,7 @@ impl Default for MyApp {
             toasts: Toasts::default().with_anchor(Anchor::TopRight),
             closable: true,
             duration: 3.5,
+            mention: true,
         }
     }
 }
@@ -35,6 +37,7 @@ impl eframe::App for MyApp {
                 ui.style_mut().visuals = Visuals::dark(); // Makes the buttons dark
                 ctx.set_visuals(egui::Visuals::dark()); // Make the ui dark
                 egui::warn_if_debug_build(ui);
+                ui.label("                                                                        Current build: 1.2.1");
 
                 let cb = |t: &mut Toast| {
                     //Callback for the toast
@@ -55,25 +58,29 @@ impl eframe::App for MyApp {
                     ui.text_edit_multiline(&mut self.insult);
                 });
 
-                let generate_button = ui.button("Generate an insult");
-                if generate_button.clicked() {
-                    self.insult = get_insult();
-                    cb(self.toasts.success("Generation Successful!")); //Sends a success toast
-                }
-
-                ui.separator();
-
                 ui.horizontal(|ui| {
                     ui.label("Your insult:");
                     ui.label(&self.insult);
                 });
 
-                let send_button = ui.button("Send insult to luna");
-                if send_button.clicked() {
-                    send_message(&self.insult);
+                ui.separator();
 
-                    cb(self.toasts.success("Message Sent!"));
-                }
+                ui.horizontal(|ui| {
+                    let generate_button = ui.button("Generate an insult");
+                    if generate_button.clicked() {
+                        self.insult = get_insult();
+                        cb(self.toasts.success("Generation Successful!")); //Sends a success toast
+                    }
+
+                    let send_button = ui.button("Send insult to luna");
+                    if send_button.clicked() {
+                        send_message(&self.insult, self.mention);
+
+                        cb(self.toasts.success("Message Sent!"));
+                    }
+
+                    ui.checkbox(&mut self.mention, "Mention luna?")
+                });
                 self.toasts.show(ctx); // Requests to render toasts
             });
         });
