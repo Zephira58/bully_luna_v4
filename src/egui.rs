@@ -57,10 +57,7 @@ impl eframe::App for MyApp {
             let popup_id = ui.make_persistent_id("send_button_popup");
             if send_button.clicked() {
                 //TODO: Call the send_message function here
-                let returned_value = match futures::executor::block_on(send_message(&self.insult)) {
-                    Ok(()) => 0,
-                    Err(err) => panic!("Failed to send message: {}", err),
-                };
+                send_message(&self.insult);
                 ui.memory().toggle_popup(popup_id);
             }
 
