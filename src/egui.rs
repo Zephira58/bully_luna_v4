@@ -40,8 +40,10 @@ impl eframe::App for MyApp {
 
                 ui.horizontal(|ui| {
                     ui.label("Current build:");
-                    ui.hyperlink_to("1.2.1", "https://github.com/Xanthus58/bully_luna_v4/releases");
-                    
+                    ui.hyperlink_to(
+                        "1.2.1",
+                        "https://github.com/Xanthus58/bully_luna_v4/releases",
+                    );
                 });
 
                 ui.add_space(8.0);
