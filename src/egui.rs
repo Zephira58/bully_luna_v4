@@ -30,6 +30,10 @@ impl Default for MyApp {
     }
 }
 
+// The env! macro gets the variable at compile time.
+const CURRENT_BUILD: &str = env!("CARGO_PKG_VERSION");
+const REPO_URL: &str = env!("CARGO_PKG_REPOSITORY");
+
 impl eframe::App for MyApp {
     fn update(&mut self, ctx: &egui::Context, _frame: &mut eframe::Frame) {
         egui::CentralPanel::default().show(ctx, |_ui| {
@@ -40,10 +44,7 @@ impl eframe::App for MyApp {
 
                 ui.horizontal(|ui| {
                     ui.label("Current build:");
-                    ui.hyperlink_to(
-                        "1.2.1",
-                        "https://github.com/Xanthus58/bully_luna_v4/releases",
-                    );
+                    ui.hyperlink_to(CURRENT_BUILD, REPO_URL);
                 });
 
                 ui.add_space(8.0);
