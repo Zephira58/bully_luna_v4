@@ -1,5 +1,4 @@
 #![allow(clippy::all)]
-use pollster::FutureExt as _;
 
 use eframe::egui::Visuals;
 use eframe::egui::{self}; //Imports the rendering engine //Imports dark mode
