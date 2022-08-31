@@ -21,7 +21,7 @@ pub fn send_message(msg: &str) {
     request_body.insert("username", "Xanthus");
     request_body.insert("avatar_url", &IMAGE_URL);
 
-    reqwest::Client::new()
+    reqwest::Client::new() //Compiler error "Does nothing unless you use .await or poll them"
         .post(&WEBHOOK_URL)
         .json(&request_body)
         .send();
