@@ -1,6 +1,6 @@
 #![allow(clippy::needless_return)]
 #![allow(non_snake_case)]
-use dotenv;
+#![allow(unused_must_use)]
 use std::collections::HashMap;
 
 pub fn get_insult() -> String {
@@ -12,33 +12,21 @@ pub fn get_insult() -> String {
     return x;
 }
 
-pub fn send_message(msg: &str) {
-    let WEBHOOK_URL = dotenv::var("WEBHOOK_URL").unwrap();
-    let IMAGE_URL = dotenv::var("IMAGE_URL").unwrap();
+#[tokio::main]
+pub async fn send_message(msg: &str) {
+    let WEBHOOK_URL = dotenv::var("WEBHOOK_URL").expect("WEBHOOK_URL not found");
+    let IMAGE_URL = dotenv::var("IMAGE_URL").expect("IMAGE_URL not found");
 
+    let message = msg.to_owned() + " <@747638440404713582>";
+    let message = message.as_str();
     let mut request_body = HashMap::new();
-    request_body.insert("content", msg);
+    request_body.insert("content", message);
     request_body.insert("username", "Xanthus");
     request_body.insert("avatar_url", &IMAGE_URL);
 
     reqwest::Client::new() //Compiler error "Does nothing unless you use .await or poll them"
         .post(&WEBHOOK_URL)
         .json(&request_body)
-        .send();
-
-    //-Debug Prints-
-    //println!("Message should be sent to discord");
-    //println!("{}", &WEBHOOK_URL);
-    //match request_body.get("avatar_url") {
-    //    Some(avatar_url) => println!("Avatar URL: {}", avatar_url),
-    //    _ => println!("No avatar URL"),
-    //}
-    //match request_body.get("content") {
-    //    Some(content) => println!("Content: {}", content),
-    //    _ => println!("No content"),
-    //}
-    //match request_body.get("username") {
-    //    Some(username) => println!("Username: {}", username),
-    //    _ => println!("No username"),
-    //}
+        .send()
+        .await;
 }
