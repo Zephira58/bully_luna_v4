@@ -106,7 +106,9 @@ name = "bully_luna_v4"
 version = "1.0.0"
 dependencies = [
  "eframe",
+ "pollster",
  "reqwest",
+ "webhook",
 ]
 
 [[package]]
@@ -1424,6 +1426,12 @@ dependencies = [
 ]
 
 [[package]]
+name = "pollster"
+version = "0.2.5"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "5da3b0203fd7ee5720aa0b5e790b591aa5d3f41c3ed2c34a3a393382198af2f7"
+
+[[package]]
 name = "proc-macro-crate"
 version = "1.2.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1611,6 +1619,9 @@ name = "serde"
 version = "1.0.144"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "0f747710de3dcd43b88c9168773254e809d8ddbdf9653b84e2554ab219f17860"
+dependencies = [
+ "serde_derive",
+]
 
 [[package]]
 name = "serde_derive"
@@ -2175,6 +2186,18 @@ dependencies = [
  "web-sys",
  "widestring",
  "winapi",
+]
+
+[[package]]
+name = "webhook"
+version = "2.0.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "b3482f4a3d66b31b4be952ba25255a51cc4ae73f4abc0f0907450644db766e3b"
+dependencies = [
+ "hyper",
+ "hyper-tls",
+ "serde",
+ "serde_json",
 ]
 
 [[package]]

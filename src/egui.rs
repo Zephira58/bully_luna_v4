@@ -1,4 +1,5 @@
 #![allow(clippy::all)]
+use pollster::FutureExt as _;
 
 use eframe::egui::Visuals;
 use eframe::egui::{self}; //Imports the rendering engine //Imports dark mode
@@ -54,9 +55,10 @@ impl eframe::App for MyApp {
             });
 
             let send_button = ui.button("Send insult to luna");
-
             let popup_id = ui.make_persistent_id("send_button_popup");
             if send_button.clicked() {
+                //TODO: Call the send_message function here
+                send_message(&self.insult); //This needs to be ran as async?
                 ui.memory().toggle_popup(popup_id);
             }
 
