@@ -1,6 +1,5 @@
 #![allow(clippy::all)]
 
-
 use eframe::egui::Visuals;
 use eframe::egui::{self}; //Imports the rendering engine //Imports dark mode
 
@@ -61,7 +60,7 @@ impl eframe::App for MyApp {
                 let returned_value = match futures::executor::block_on(send_message(&self.insult)) {
                     Ok(()) => 0,
                     Err(err) => panic!("Failed to send message: {}", err),
-                  };
+                };
                 ui.memory().toggle_popup(popup_id);
             }
 
