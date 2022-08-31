@@ -1,7 +1,8 @@
 #![allow(clippy::all)]
+use std::time::Duration;
 
-use eframe::egui::Visuals;
-use eframe::egui::{self}; //Imports the rendering engine //Imports dark mode
+use eframe::egui::{self, Visuals, Window};
+use egui_notify::{Anchor, Toast, Toasts};
 
 mod api_handler; //Imports the API handler
 use api_handler::*;
@@ -9,6 +10,9 @@ use api_handler::*;
 pub struct MyApp {
     //Enter global values to be used with your app here
     insult: String,
+    toasts: Toasts,
+    closable: bool,
+    duration: f32,
 }
 
 impl Default for MyApp {
@@ -17,16 +21,26 @@ impl Default for MyApp {
         Self {
             //enter global default values here
             insult: "".to_string(),
+            toasts: Toasts::default().with_anchor(Anchor::TopRight),
+            closable: true,
+            duration: 3.5,
         }
     }
 }
 
 impl eframe::App for MyApp {
     fn update(&mut self, ctx: &egui::Context, _frame: &mut eframe::Frame) {
-        egui::CentralPanel::default().show(ctx, |ui| {
+        egui::CentralPanel::default().show(ctx, |_ui| {
+            Window::new("Bully Luna V.4!").show(ctx, |ui| {
+
             ui.style_mut().visuals = Visuals::dark(); // Makes the buttons dark
             ctx.set_visuals(egui::Visuals::dark()); // Make the ui dark
             egui::warn_if_debug_build(ui);
+
+            let cb = |t: &mut Toast| { //Callback for the toast
+                t.set_closable(self.closable)
+                    .set_duration(Some(Duration::from_millis((1000. * self.duration) as u64)));
+            };
 
             self.insult = self.insult.replace("\n", "");
 
@@ -44,6 +58,7 @@ impl eframe::App for MyApp {
             let generate_button = ui.button("Generate an insult");
             if generate_button.clicked() {
                 self.insult = get_insult();
+                cb(self.toasts.success("Generation Successful!")); //Sends a success toast
             }
 
             ui.separator();
@@ -52,23 +67,15 @@ impl eframe::App for MyApp {
                 ui.label("Your insult:");
                 ui.label(&self.insult);
             });
-
+            
             let send_button = ui.button("Send insult to luna");
-            let popup_id = ui.make_persistent_id("send_button_popup");
             if send_button.clicked() {
-                //TODO: Call the send_message function here
                 send_message(&self.insult);
-                ui.memory().toggle_popup(popup_id);
-            }
 
-            egui::popup::popup_below_widget(ui, popup_id, &send_button, |ui| {
-                //The contents of the popup go here
-                ui.set_min_width(350.0); // if you want to control the size
-                ui.label(format!("{}", self.insult));
-                ui.separator();
-                ui.label(
-                    "Has been successfully sent to luna!\nThank you for choosing bully luna v.4!",
-                );
+                cb(self.toasts.success("Message Sent!"));
+
+            }
+            self.toasts.show(ctx); // Requests to render toasts
             });
         });
     }

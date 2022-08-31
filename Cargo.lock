@@ -103,10 +103,11 @@ checksum = "0d8c1fef690941d3e7788d328517591fecc684c084084702d6ff1641e993699a"
 
 [[package]]
 name = "bully_luna_v4"
-version = "1.1.0"
+version = "1.2.0"
 dependencies = [
  "dotenv",
  "eframe",
+ "egui-notify",
  "reqwest",
  "tokio",
 ]
@@ -452,6 +453,15 @@ dependencies = [
  "epaint",
  "nohash-hasher",
  "tracing",
+]
+
+[[package]]
+name = "egui-notify"
+version = "0.3.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "54a1a769b3346b6a8bca867376068a829b1efc335cce90951337f173d3fbb5a0"
+dependencies = [
+ "egui",
 ]
 
 [[package]]

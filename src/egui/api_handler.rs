@@ -14,7 +14,7 @@ pub fn get_insult() -> String {
 
 #[tokio::main]
 pub async fn send_message(msg: &str) {
-    let WEBHOOK_URL = dotenv::var("WEBHOOK_URL").expect("WEBHOOK_URL not found");
+    let _WEBHOOK_URL = dotenv::var("WEBHOOK_URL").expect("WEBHOOK_URL not found");
     let IMAGE_URL = dotenv::var("IMAGE_URL").expect("IMAGE_URL not found");
     let DISCORD_ID = dotenv::var("DISCORD_ID").expect("DISCORD_ID not found");
 
@@ -25,9 +25,9 @@ pub async fn send_message(msg: &str) {
     request_body.insert("username", "Xanthus");
     request_body.insert("avatar_url", &IMAGE_URL);
 
-    reqwest::Client::new() //Compiler error "Does nothing unless you use .await or poll them"
-        .post(&WEBHOOK_URL)
-        .json(&request_body)
-        .send()
-        .await;
+    //reqwest::Client::new() //Compiler error "Does nothing unless you use .await or poll them"
+    //    .post(&WEBHOOK_URL)
+    //    .json(&request_body)
+    //    .send()
+    //    .await;
 }
