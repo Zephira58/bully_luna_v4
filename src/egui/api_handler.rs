@@ -29,7 +29,7 @@ pub async fn send_message(msg: &str, mention: bool) {
     request_body.insert("username", "Malacyte");
     request_body.insert("avatar_url", &IMAGE_URL);
 
-    reqwest::Client::new() //Compiler error "Does nothing unless you use .await or poll them"
+    reqwest::Client::new()
         .post(&WEBHOOK_URL)
         .json(&request_body)
         .send()
