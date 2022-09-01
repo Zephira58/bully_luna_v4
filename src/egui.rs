@@ -87,8 +87,8 @@ impl eframe::App for MyApp {
                     let send_button = ui.button("Send message to luna");
                     if send_button.clicked() {
                         send_message(&self.insult, self.mention);
-
                         cb(self.toasts.success("Message Sent!"));
+                        self.insult = "".to_string();
                     }
 
                     ui.checkbox(&mut self.mention, "Mention luna?")
