@@ -7,6 +7,8 @@ use egui_notify::{Anchor, Toast, Toasts};
 mod api_handler; //Imports the API handler
 use api_handler::*;
 
+use crate::APP_NAME;
+
 pub struct MyApp {
     //Enter global values to be used with your app here
     insult: String,
@@ -37,7 +39,7 @@ const REPO_URL: &str = env!("CARGO_PKG_REPOSITORY");
 impl eframe::App for MyApp {
     fn update(&mut self, ctx: &egui::Context, _frame: &mut eframe::Frame) {
         egui::CentralPanel::default().show(ctx, |_ui| {
-            Window::new("Bully Luna V.4!").show(ctx, |ui| {
+            Window::new(APP_NAME).show(ctx, |ui| {
                 ui.style_mut().visuals = Visuals::dark(); // Makes the buttons dark
                 ctx.set_visuals(egui::Visuals::dark()); // Make the ui dark
                 egui::warn_if_debug_build(ui);

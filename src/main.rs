@@ -2,10 +2,12 @@
 mod egui;
 use egui::*;
 
+pub const APP_NAME: &str = "Bully Luna v.4";
+
 fn main() {
     let options = eframe::NativeOptions::default();
     eframe::run_native(
-        "Bully Luna v.4",                           //app name
+        APP_NAME,                                   //app name
         options,                                    //just leave this at options
         Box::new(|_cc| Box::new(MyApp::default())), //leave this as default
     );
