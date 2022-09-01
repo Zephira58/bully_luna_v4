@@ -5,6 +5,7 @@ use egui::*;
 pub const APP_NAME: &str = "Bully Luna v.4";
 
 fn main() {
+    println!("quick test for github workflows on PR");
     let options = eframe::NativeOptions::default();
     eframe::run_native(
         APP_NAME,                                   //app name
