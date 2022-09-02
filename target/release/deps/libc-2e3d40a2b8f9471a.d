@@ -1,0 +1,11 @@
+C:\Users\pikac\Documents\Server Sync\Coding\GitHub\bully_luna_v4\target\release\deps\libc-2e3d40a2b8f9471a.rmeta: C:\Users\pikac\.cargo\registry\src\github.com-1ecc6299db9ec823\libc-0.2.132\src\lib.rs C:\Users\pikac\.cargo\registry\src\github.com-1ecc6299db9ec823\libc-0.2.132\src\macros.rs C:\Users\pikac\.cargo\registry\src\github.com-1ecc6299db9ec823\libc-0.2.132\src\fixed_width_ints.rs C:\Users\pikac\.cargo\registry\src\github.com-1ecc6299db9ec823\libc-0.2.132\src\windows\mod.rs C:\Users\pikac\.cargo\registry\src\github.com-1ecc6299db9ec823\libc-0.2.132\src\windows\msvc\mod.rs
+
+C:\Users\pikac\Documents\Server Sync\Coding\GitHub\bully_luna_v4\target\release\deps\liblibc-2e3d40a2b8f9471a.rlib: C:\Users\pikac\.cargo\registry\src\github.com-1ecc6299db9ec823\libc-0.2.132\src\lib.rs C:\Users\pikac\.cargo\registry\src\github.com-1ecc6299db9ec823\libc-0.2.132\src\macros.rs C:\Users\pikac\.cargo\registry\src\github.com-1ecc6299db9ec823\libc-0.2.132\src\fixed_width_ints.rs C:\Users\pikac\.cargo\registry\src\github.com-1ecc6299db9ec823\libc-0.2.132\src\windows\mod.rs C:\Users\pikac\.cargo\registry\src\github.com-1ecc6299db9ec823\libc-0.2.132\src\windows\msvc\mod.rs
+
+C:\Users\pikac\Documents\Server Sync\Coding\GitHub\bully_luna_v4\target\release\deps\libc-2e3d40a2b8f9471a.d: C:\Users\pikac\.cargo\registry\src\github.com-1ecc6299db9ec823\libc-0.2.132\src\lib.rs C:\Users\pikac\.cargo\registry\src\github.com-1ecc6299db9ec823\libc-0.2.132\src\macros.rs C:\Users\pikac\.cargo\registry\src\github.com-1ecc6299db9ec823\libc-0.2.132\src\fixed_width_ints.rs C:\Users\pikac\.cargo\registry\src\github.com-1ecc6299db9ec823\libc-0.2.132\src\windows\mod.rs C:\Users\pikac\.cargo\registry\src\github.com-1ecc6299db9ec823\libc-0.2.132\src\windows\msvc\mod.rs
+
+C:\Users\pikac\.cargo\registry\src\github.com-1ecc6299db9ec823\libc-0.2.132\src\lib.rs:
+C:\Users\pikac\.cargo\registry\src\github.com-1ecc6299db9ec823\libc-0.2.132\src\macros.rs:
+C:\Users\pikac\.cargo\registry\src\github.com-1ecc6299db9ec823\libc-0.2.132\src\fixed_width_ints.rs:
+C:\Users\pikac\.cargo\registry\src\github.com-1ecc6299db9ec823\libc-0.2.132\src\windows\mod.rs:
+C:\Users\pikac\.cargo\registry\src\github.com-1ecc6299db9ec823\libc-0.2.132\src\windows\msvc\mod.rs:
