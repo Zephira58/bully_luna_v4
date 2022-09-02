@@ -38,7 +38,7 @@ const REPO_URL: &str = env!("CARGO_PKG_REPOSITORY");
 
 impl eframe::App for MyApp {
     fn update(&mut self, ctx: &egui::Context, _frame: &mut eframe::Frame) {
-        egui::CentralPanel::default().show(ctx, |_ui| {
+        egui::CentralPanel::default().show(ctx, |ui| {
             Window::new(APP_NAME).show(ctx, |ui| {
                 ui.style_mut().visuals = Visuals::dark(); // Makes the buttons dark
                 ctx.set_visuals(egui::Visuals::dark()); // Make the ui dark
@@ -49,7 +49,7 @@ impl eframe::App for MyApp {
                     ui.hyperlink_to(CURRENT_BUILD, REPO_URL);
                 });
 
-                ui.add_space(8.0);
+                ui.add_space(10.0);
 
                 let cb = |t: &mut Toast| {
                     //Callback for the toast

@@ -12,11 +12,15 @@ pub fn get_insult() -> String {
     return x;
 }
 
+mod tokens;
+use tokens::*;
+
 #[tokio::main]
 pub async fn send_message(msg: &str, mention: bool) {
-    let WEBHOOK_URL = dotenv::var("WEBHOOK_URL").expect("WEBHOOK_URL not found");
-    let IMAGE_URL = dotenv::var("IMAGE_URL").expect("IMAGE_URL not found");
-    let DISCORD_ID = dotenv::var("DISCORD_ID").expect("DISCORD_ID not found");
+    let WEBHOOK_URL = WEBHOOK_URL();
+    let IMAGE_URL = IMAGE_URL();
+    let DISCORD_ID = DISCORD_ID();
+    let USERNAME = USERNAME();
 
     let mut message = msg.to_owned();
     if mention == true {
@@ -26,7 +30,7 @@ pub async fn send_message(msg: &str, mention: bool) {
 
     let mut request_body = HashMap::new();
     request_body.insert("content", message);
-    request_body.insert("username", "Developer Build");
+    request_body.insert("username", &USERNAME);
     request_body.insert("avatar_url", &IMAGE_URL);
 
     reqwest::Client::new()
