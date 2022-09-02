@@ -26,7 +26,7 @@ pub async fn send_message(msg: &str, mention: bool) {
 
     let mut request_body = HashMap::new();
     request_body.insert("content", message);
-    request_body.insert("username", "Malacyte");
+    request_body.insert("username", "Developer Build");
     request_body.insert("avatar_url", &IMAGE_URL);
 
     reqwest::Client::new()
