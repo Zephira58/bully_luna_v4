@@ -14,7 +14,12 @@ pub struct TemplateApp {
     closable: bool,
     duration: f32,
     mention: bool,
-    
+
+    #[serde(skip)]
+    insult_promise: Option<poll_promise::Promise<Option<String>>>,
+    #[serde(skip)]
+    insult_send_promise: Option<poll_promise::Promise<ehttp::Result<ehttp::Response>>>,
+
     #[serde(skip)]
     toasts: Toasts,
 }
@@ -27,6 +32,9 @@ impl Default for TemplateApp {
             closable: true,
             duration: 3.5,
             mention: true,
+
+            insult_promise: None,
+            insult_send_promise: None,
         }
     }
 }
@@ -78,8 +86,8 @@ impl eframe::App for TemplateApp {
 
             ui.label("Hello and welcome to version 4 of the bully luna program!");
             ui.label(
-            "You can randomly generate an insult or write your own below to be sent to luna!",
-        );
+                "You can randomly generate an insult or write your own below to be sent to luna!",
+            );
 
             ui.separator();
             ui.horizontal(|ui| {
@@ -97,15 +105,49 @@ impl eframe::App for TemplateApp {
             ui.horizontal(|ui| {
                 let generate_button = ui.button("Generate an insult");
                 if generate_button.clicked() {
-                    self.insult = get_insult();
-                    cb(self.toasts.success("Generation Successful!")); //Sends a success toast
+                    self.insult_promise = Some(get_insult());
+                }
+
+                if let Some(promise) = &mut self.insult_promise {
+                    match promise.ready() {
+                        Some(Some(insult)) => {
+                            cb(self.toasts.success("Generation Successful!")); //Sends a success toast
+                            self.insult = insult.clone();
+                            self.insult_promise = None;
+                        }
+                        // Request did return but was not successfull
+                        Some(None) => {
+                            cb(self.toasts.error("Could not generate insult!"));
+                            self.insult_promise = None;
+                        }
+                        None => {
+                            ui.spinner();
+                        }
+                    }
                 }
 
                 let send_button = ui.button("Send message to luna");
                 if send_button.clicked() {
-                    send_message(&self.insult, self.mention);
-                    cb(self.toasts.success("Message Sent!"));
-                    self.insult = "".to_string();
+                    self.insult_send_promise = Some(send_message(&self.insult, self.mention));
+                }
+
+                if let Some(promise) = &mut self.insult_send_promise {
+                    match promise.ready() {
+                        Some(result) => {
+                            if let Err(e) = result {
+                                cb(self
+                                    .toasts
+                                    .error(format!("Could not send insult!\nError: {e:?}")));
+                            } else {
+                                cb(self.toasts.success("Message Sent!"));
+                            }
+                            self.insult = "".to_string();
+                            self.insult_send_promise = None;
+                        }
+                        None => {
+                            ui.spinner();
+                        }
+                    }
                 }
 
                 ui.checkbox(&mut self.mention, "Mention luna?")
