@@ -3,24 +3,23 @@
 #![allow(unused_must_use)]
 use std::collections::HashMap;
 
-pub fn get_insult() -> poll_promise::Promise<String> {
+pub fn get_insult() -> poll_promise::Promise<Option<String>> {
     let (sender, promise) = poll_promise::Promise::new();
     ehttp::fetch(
         ehttp::Request::get("https://insult.mattbas.org/api/insult"),
-        // ehttp::Request::get("https://wttr.in"),
         move |response| {
-            let response = response.expect("Request failed");
-            let text = response
-                .text()
-                .expect("Could not get response body")
-                .to_string();
+            let response = response.ok(); // convert to Option
+            let text = response.and_then(|response| response.text().map(|text| text.to_string()));
             sender.send(text);
         },
     );
     promise
 }
 
-pub fn send_message(msg: &str, mention: bool) -> poll_promise::Promise<()> {
+pub fn send_message(
+    msg: &str,
+    mention: bool,
+) -> poll_promise::Promise<ehttp::Result<ehttp::Response>> {
     let WEBHOOK_URL = "https://canary.discord.com/api/webhooks/1014613740139839509/sdl_Q0YDa3Nwn9JMsyPAHwWB2AjGHz-cupexxVHYjWbmDL6MO9D3FUpCGAs65EywYnEM".to_string();
     let IMAGE_URL = "https://cdn.discordapp.com/avatars/892723824297119754/fdd67fef581729a0224f7bf9e8a52d3b.png?size=1024".to_string();
     let DISCORD_ID = " <@747638440404713582>".to_string();
@@ -43,7 +42,7 @@ pub fn send_message(msg: &str, mention: bool) -> poll_promise::Promise<()> {
     let (sender, promise) = poll_promise::Promise::new();
     ehttp::fetch(request, move |response| {
         tracing::info!("Discord api response: {:?}", response);
-        sender.send(());
+        sender.send(response);
     });
     promise
 }

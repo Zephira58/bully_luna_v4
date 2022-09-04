@@ -16,9 +16,9 @@ pub struct TemplateApp {
     mention: bool,
 
     #[serde(skip)]
-    insult_promise: Option<poll_promise::Promise<String>>,
+    insult_promise: Option<poll_promise::Promise<Option<String>>>,
     #[serde(skip)]
-    insult_send_promise: Option<poll_promise::Promise<()>>,
+    insult_send_promise: Option<poll_promise::Promise<ehttp::Result<ehttp::Response>>>,
 
     #[serde(skip)]
     toasts: Toasts,
@@ -110,9 +110,14 @@ impl eframe::App for TemplateApp {
 
                 if let Some(promise) = &mut self.insult_promise {
                     match promise.ready() {
-                        Some(insult) => {
+                        Some(Some(insult)) => {
                             cb(self.toasts.success("Generation Successful!")); //Sends a success toast
                             self.insult = insult.clone();
+                            self.insult_promise = None;
+                        }
+                        // Request did return but was not successfull
+                        Some(None) => {
+                            cb(self.toasts.error("Could not generate insult!"));
                             self.insult_promise = None;
                         }
                         None => {
@@ -128,8 +133,14 @@ impl eframe::App for TemplateApp {
 
                 if let Some(promise) = &mut self.insult_send_promise {
                     match promise.ready() {
-                        Some(()) => {
-                            cb(self.toasts.success("Message Sent!"));
+                        Some(result) => {
+                            if let Err(e) = result {
+                                cb(self
+                                    .toasts
+                                    .error(format!("Could not send insult!\nError: {e:?}")));
+                            } else {
+                                cb(self.toasts.success("Message Sent!"));
+                            }
                             self.insult = "".to_string();
                             self.insult_send_promise = None;
                         }
